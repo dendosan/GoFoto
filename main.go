@@ -20,6 +20,8 @@ func init() {
 
 func main() {
 	http.HandleFunc("/", index)
+	// add route to serve pictures
+	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public"))))
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
@@ -56,7 +58,8 @@ func index(w http.ResponseWriter, req *http.Request) {
 		c = appendValue(w, c, fname)
 	}
 	xs := strings.Split(c.Value, "|")
-	tpl.ExecuteTemplate(w, "index.gohtml", xs)
+	// sliced cookie values to only send over images
+	tpl.ExecuteTemplate(w, "index.gohtml", xs[1:])
 }
 
 // add fund to get Cookie
