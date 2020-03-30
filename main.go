@@ -62,7 +62,7 @@ func index(w http.ResponseWriter, req *http.Request) {
 	tpl.ExecuteTemplate(w, "index.gohtml", xs[1:])
 }
 
-// add fund to get Cookie
+// add func to get Cookie
 func getCookie(w http.ResponseWriter, req *http.Request) *http.Cookie {
 	c, err := req.Cookie("session")
 	if err != nil {
